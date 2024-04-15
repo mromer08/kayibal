@@ -41,8 +41,17 @@ class PublicationController extends Controller
     // public function store(Request $request):HttpResponse
     {
         // $publication = $request->user()->publications()->create($request->all());
-        $request->user()->publications()->create($request->all());
-        return redirect(route('index')); //REENVIAR A LOS PRODUCTOS CREADOS POR EL USUARIO
+        $data = $request->all();
+
+        if (!empty($request->file('image'))) {
+            $filename = time() . $request->file('image')->getClientOriginalName();
+            $path = $request->file('image')->storeAs('images', $filename, 'public');
+            $data['image'] = '/storage/' . $path;
+        }
+
+
+        $request->user()->publications()->create($data);
+        return redirect(route('home')); //REENVIAR A LOS PRODUCTOS CREADOS POR EL USUARIO
         // return response($publication);
     }
 
@@ -51,10 +60,10 @@ class PublicationController extends Controller
      */
     public function show(Publication $publication): Response
     {
+        $publication->load('tag:id,name', 'user:id,name');
         return Inertia::render('Publications/Show', [
-            //props
+            'publication' => $publication,
         ]);
-        // return response('hola');
     }
 
     /**

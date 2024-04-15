@@ -17,11 +17,11 @@ use Inertia\Inertia;
 //     ]);
 // });
 
-Route::get('/', function(){
+Route::get('/', function () {
     return Inertia::render('Publications/Index', [
-        // 'publications' => Publication::with('tag:id,name')->latest()->get(),
-    ])->name('index');
-});
+        'publications' => Publication::with('tag:id,name')->latest()->get(),
+    ]);
+})->name('home');
 
 Route::resource('tags', TagController::class);
 
@@ -36,12 +36,16 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('publications', PublicationController::class)
-    ->except(['index'])
+    ->except(['index', 'show'])
+    ->middleware(['auth']);
+
+Route::resource('publications', PublicationController::class)
+    ->only(['index', 'show'])
     ->middleware(['auth']);
 
 // JUST FOR DEV ENVIROMENT [DELETE]
 Route::get('/token', function () {
-    return csrf_token(); 
+    return csrf_token();
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
