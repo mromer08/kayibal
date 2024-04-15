@@ -15,7 +15,6 @@ import TextInput from '@/Components/TextInput';
 
 export default function NavBar({ header, children }) {
     const { auth } = usePage().props;
-    console.log(auth);
 
     return (
         <div className="min-h-screen bg-brown-50">
@@ -120,7 +119,7 @@ export default function NavBar({ header, children }) {
                     {/* Ícono de Grano y número de granos */}
                     <div className="flex items-center ml-4">
                         <CocoaLightIcon className="text-white h-6 w-6 mr-2" />
-                        <span className="ml-1 text-white">100000000000</span>
+                        <span className="ml-1 text-white">1,500</span>
                     </div>
                 </div>
             </nav>

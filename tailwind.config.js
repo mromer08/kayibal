@@ -18,6 +18,7 @@ export default {
             colors: {
                 brown: {
                     50: '#F3E6DA',
+                    100: '#DDCBBA',
                     500: '#A88F7C',
                     700: '#74655A',
                     900: '#180B02',
