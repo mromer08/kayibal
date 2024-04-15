@@ -17,7 +17,7 @@ function Create() {
     });
     const submit = (e) => {
         e.preventDefault();
-        // console.log(data);
+        console.log(data);
         post(route('publications.store'));
     };
     return (
@@ -188,8 +188,8 @@ function Create() {
                                                         <input
                                                             id="image"
                                                             type="file"
-                                                        value={data.image}
-                                                        onChange={(e) => setData('image', e.target.value)}
+                                                            // value={data.image}
+                                                            onChange={(e) => setData('image', e.target.files[0])}
                                                         />
                                                     </label>
                                                 </div>

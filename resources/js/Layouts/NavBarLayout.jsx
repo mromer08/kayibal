@@ -23,7 +23,7 @@ export default function NavBar({ header, children }) {
                 <div className="max-w-7xl mx-auto py-2 px-4 sm:px-6 lg:px-8 flex justify-between items-center h-12">
                     {/* Sección izquierda */}
                     <div className="flex items-center">
-                        <Link to="/" className="flex items-center text-white">
+                        <Link href="/" className="flex items-center text-white">
                             <ApplicationLogo className="block h-10 w-auto fill-current text-white" />
                             <h1 className="ml-2 text-white font-bold text-3xl">K'AYIB'AL</h1>
                         </Link>

@@ -20,7 +20,7 @@ export default function Publication({ publication = null, deletepublication, set
 
   return (
     <div className="group bg-brown-100 p-3 rounded-xl flex flex-col">
-      <Link to="/"> {/**colocar el enlace del producto con id para el overview */}
+      <Link href={`/publications/${publication.id}`} >
         <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
           <img
             src={publication.image}
