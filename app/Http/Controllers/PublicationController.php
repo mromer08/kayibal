@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Publication;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Response as HttpResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -19,22 +20,30 @@ class PublicationController extends Controller
             //props
             
         ]);
+        // return response('fine');
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): Response
     {
-        //
+        return Inertia::render('Publications/Create', [
+            //props
+        ]);
+        // return response('fine 2');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request):RedirectResponse
+    // public function store(Request $request):HttpResponse
     {
-        //
+        // $publication = $request->user()->publications()->create($request->all());
+        $request->user()->publications()->create($request->all());
+        return redirect(route('index')); //REENVIAR A LOS PRODUCTOS CREADOS POR EL USUARIO
+        // return response($publication);
     }
 
     /**
@@ -45,6 +54,7 @@ class PublicationController extends Controller
         return Inertia::render('Publications/Show', [
             //props
         ]);
+        // return response('hola');
     }
 
     /**
