@@ -2,18 +2,28 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicationController;
+use App\Http\Controllers\TagController;
+use App\Models\Publication;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+// Route::get('/', function () {
+//     return Inertia::render('Welcome', [
+//         'canLogin' => Route::has('login'),
+//         'canRegister' => Route::has('register'),
+//         'laravelVersion' => Application::VERSION,
+//         'phpVersion' => PHP_VERSION,
+//     ]);
+// });
+
+Route::get('/', function(){
+    return Inertia::render('Publications/Index', [
+        // 'publications' => Publication::with('tag:id,name')->latest()->get(),
+    ])->name('index');
 });
+
+Route::resource('tags', TagController::class);
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -25,6 +35,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::resource('publications', PublicationController::class);
+Route::resource('publications', PublicationController::class)
+    ->except(['index'])
+    ->middleware(['auth']);
+
+// JUST FOR DEV ENVIROMENT [DELETE]
+Route::get('/token', function () {
+    return csrf_token(); 
+});
 
 require __DIR__.'/auth.php';
