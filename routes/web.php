@@ -52,4 +52,8 @@ Route::resource('tags', TagController::class)
 
 Route::get('/search', [PublicationController::class, 'search'])->name('search');
 
+Route::get('/packs', function () {
+    return Inertia::render('Packs/Index');
+})->middleware(['auth'])->name('packs');
+
 require __DIR__ . '/auth.php';
