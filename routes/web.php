@@ -40,12 +40,16 @@ Route::resource('publications', PublicationController::class)
     ->middleware(['auth']);
 
 Route::resource('publications', PublicationController::class)
-    ->only(['index', 'show'])
-    ->middleware(['auth']);
+    ->only(['index', 'show']);
 
 // JUST FOR DEV ENVIROMENT [DELETE]
 Route::get('/token', function () {
     return csrf_token();
 });
+
+Route::resource('tags', TagController::class)
+    ->only(['index']);
+
+Route::get('/search', [PublicationController::class, 'search'])->name('search');
 
 require __DIR__ . '/auth.php';

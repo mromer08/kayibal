@@ -22,8 +22,14 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@kayibal.com',
         ]);
 
+        // Crear los tags adicionales
         DB::table('tags')->insert([
-            'name'=>'sin etiqueta'
+            ['name' => 'Tecnología'],
+            ['name' => 'Hogar'],
+            ['name' => 'Académico'],
+            ['name' => 'Literatura'],
+            ['name' => 'Decoración'],
+            ['name' => 'Otros'],
         ]);
     }
 }

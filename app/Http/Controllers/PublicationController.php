@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response as HttpResponse;
 use Inertia\Inertia;
 use Inertia\Response;
+use Ramsey\Uuid\Type\Integer;
 
 class PublicationController extends Controller
 {
@@ -88,5 +89,22 @@ class PublicationController extends Controller
     public function destroy(Publication $publication)
     {
         //
+    }
+
+    /**
+     * Search publications by title.
+     */
+    public function search(Request $request): Response
+    {
+        $searchTerm = $request->input('search'); // Obtener el término de búsqueda desde la solicitud
+
+        // Realizar la búsqueda en la base de datos
+        $publications = Publication::where('title', 'like', "%{$searchTerm}%")->get();
+
+        // Renderizar una vista con los resultados de la búsqueda
+        return Inertia::render('Publications/Index', [
+            'publications' => $publications,
+            'searchTerm' => $searchTerm,
+        ]);
     }
 }

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Tag;
 use Illuminate\Http\Request;
+// use Inertia\Response;
+
 use Illuminate\Http\Response;
 
 class TagController extends Controller
@@ -11,9 +13,10 @@ class TagController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index():Response
     {
-        return response('hola');
+        $tags = Tag::all();
+        return response($tags);
     }
 
     /**

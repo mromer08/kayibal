@@ -2,19 +2,22 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import NavBar from "@/Layouts/NavBarLayout";
 import { PhotoIcon } from "@heroicons/react/24/solid";
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 
 function Create() {
+    const { tags } = usePage().props;
     const { data, setData, post, processing, errors, reset } = useForm({
         title: '',
         description: '',
-        category: '',
-        tag_id: '',
-        type: '',
+        category: 'producto',
+        tag_id: tags[0].id,
+        type: 'ofreciendo',
         price: 0,
         stock: 1,
         image: ''
     });
+
+
     const submit = (e) => {
         e.preventDefault();
         console.log(data);
@@ -22,6 +25,7 @@ function Create() {
     };
     return (
         <NavBar>
+            <Head title="Publicacion" />
             <section className="flex  flex-1 flex-col justify-center px-6 py-10 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     {/* <form onSubmit={handleSubmit(onSubmit)} className="space-y-6"> */}
@@ -31,7 +35,7 @@ function Create() {
                                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                                     <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                                         {/* {edit._id ? "Editar" : "Nuevo"} producto */}
-                                        Nuevo Producto
+                                        Nueva Publicacion
                                     </h2>
                                 </div>
 
@@ -80,15 +84,15 @@ function Create() {
                                             Tipo
                                         </label>
                                         <div className="mt-2">
-                                        <select
+                                            <select
                                                 id="type"
                                                 name="type"
                                                 value={data.type}
                                                 className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                                                 onChange={(e) => setData('type', e.target.value)}
                                             >
-                                                <option value="buscando">buscando</option>
                                                 <option value="ofreciendo">ofreciendo</option>
+                                                <option value="buscando">buscando</option>
                                             </select>
                                         </div>
                                     </div>
@@ -98,7 +102,7 @@ function Create() {
                                             Categoria
                                         </label>
                                         <div className="mt-2">
-                                        <select
+                                            <select
                                                 id="category"
                                                 name="category"
                                                 value={data.category}
@@ -158,13 +162,21 @@ function Create() {
                                             Etiqueta
                                         </label>
                                         <div className="mt-2">
-                                            <input
+
+
+                                            <select
                                                 id="tag"
                                                 type="text"
                                                 value={data.tag_id}
                                                 className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                                 onChange={(e) => setData('tag_id', e.target.value)}
-                                            />
+                                            >
+                                                {tags.map(tag => (
+                                                    <option key={tag.id} value={tag.id}>{tag.name}</option>
+                                                ))}
+                                            </select>
+
+
                                         </div>
                                     </div>
                                     <div className="col-span-full">

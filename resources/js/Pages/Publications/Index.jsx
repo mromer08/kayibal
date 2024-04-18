@@ -1,36 +1,14 @@
 import { useState } from "react";
 import Publication from "@/Components/Publication";
 import NavBar from "@/Layouts/NavBarLayout";
+import { Head } from "@inertiajs/react";
 
-export default function Index({ publications = [{
-    id: 1,
-    title: 'TITULO',
-    category: 'publicationO',
-    user: {name: 'Usuario'},
-    type: 'TIPO',
-    price: 1898,
-    image: '/images/cacao_dark.svg',
-    state: 'activo',
-    stock: 5,
-    reportCount: 0
-
-}, {
-    id: 2,
-    title: 'TITULO 2',
-    category: 'publicationO',
-    user: {name: 'Usuario'},
-    type: 'TIPO',
-    price: 1898,
-    image: '/images/cacao_dark.svg',
-    state: 'activo',
-    stock: 5,
-    reportCount: 0
-
-}] }) {
+export default function Index({ publications, searchTerm}) {
     // const { auth } = usePage().props;
-
+    console.log(searchTerm);
     return (
-        <NavBar>
+        <NavBar searchTerm={searchTerm}>
+            <Head title="Home" />
             <div>
                 <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
                     <h2 className="sr-only">Publicaciones</h2>

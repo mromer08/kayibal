@@ -2,20 +2,26 @@ import { useEffect, useState } from 'react';
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
-import { Link, useForm, usePage } from '@inertiajs/react';
+import { Link, router, useForm, usePage } from '@inertiajs/react';
 import {
-    ShoppingCartIcon,
+    PlusCircleIcon,
     UserIcon,
     MagnifyingGlassIcon,
     Squares2X2Icon
 } from "@heroicons/react/24/solid";
 import CocoaLightIcon from '@/Components/CocoaLightIcon';
 import TextInput from '@/Components/TextInput';
-// import GranoIcon from 'ruta/a/tu/svg/grano'; // Importa el ícono de grano
 
-export default function NavBar({ header, children }) {
-    const { auth } = usePage().props;
+export default function NavBar({ header, children, searchTerm = '' }) {
+    const { auth, tags } = usePage().props;
+    const { data, setData, get, reset} = useForm({
+        search: searchTerm
+    })
 
+    const submit = (e) => {
+        e.preventDefault();
+        get(route('search'));
+    };
     return (
         <div className="min-h-screen bg-brown-50">
             {/* Barra de navegación superior */}
@@ -38,30 +44,37 @@ export default function NavBar({ header, children }) {
                                     >
                                         <Squares2X2Icon className="text-white h-6 w-6 mr-2" />
                                         Categorias
-                                        {/* Aquí debería ir el ícono de dropdown */}
                                     </button>
                                 </Dropdown.Trigger>
 
                                 <Dropdown.Content>
-                                    {/* <Dropdown.Link href={route('profile.edit')}>Profile</Dropdown.Link> */}
-                                    <Dropdown.Link href="#">Categoria 1</Dropdown.Link>
-                                    <Dropdown.Link href="#">Categoria 2</Dropdown.Link>
-                                    <Dropdown.Link href="#">Categoria 3</Dropdown.Link>
+                                    {tags.map(tag => (
+                                        <Dropdown.Link key={tag.id} href="#">{tag.name}</Dropdown.Link>
+                                    ))}
                                 </Dropdown.Content>
                             </Dropdown>
                         </div>
                     </div>
 
                     {/* Barra de búsqueda */}
-                    <div className="flex justify-center items-center">
-                        <MagnifyingGlassIcon className="text-white h-6 w-6 mr-2" />
+                    <form className="flex justify-center items-center" onSubmit={submit}>
                         <TextInput
                             type="text"
+                            name="search"
+                            value={data.search}
                             placeholder="Buscar..."
                             className="w-96 py-1 rounded-md text-gray-800 border border-gray-300 text-sm focus:outline-none focus:border-brown-500"
+                            onChange={(e) => setData('search', e.target.value)}
+                            
                         />
+                        
+                        <button type='submit'>
+                        <MagnifyingGlassIcon className="text-white h-6 w-6 ml-2 m-1 rounded-md hover:bg-brown-500" />
 
-                    </div>
+                        </button>
+                        
+
+                    </form>
 
                     {/* Sección derecha */}
                     <div className="flex items-center">
@@ -101,7 +114,12 @@ export default function NavBar({ header, children }) {
                         </Dropdown>
 
                         {/* Ícono de Carro */}
-                        <ShoppingCartIcon className="text-white h-6 w-6" />
+                        <Link href={route('publications.create')} title='Crear Publicacion'
+                        className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-transparent hover:bg-brown-700 focus:outline-none transition ease-in-out duration-150"
+                        >
+                        <PlusCircleIcon className="text-white h-6 w-6 mr-2" />
+                        Crear
+                        </Link>
                     </div>
                 </div>
             </nav>
@@ -117,10 +135,13 @@ export default function NavBar({ header, children }) {
                     </div>
 
                     {/* Ícono de Grano y número de granos */}
-                    <div className="flex items-center ml-4">
+                    <Link 
+                    className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-transparent hover:bg-brown-700 focus:outline-none transition ease-in-out duration-150"
+
+                    >
                         <CocoaLightIcon className="text-white h-6 w-6 mr-2" />
                         <span className="ml-1 text-white">1,500</span>
-                    </div>
+                    </Link>
                 </div>
             </nav>
 
