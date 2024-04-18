@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Publication;
 use App\Models\Tag;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -15,12 +16,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(1)->create();
-
         User::factory()->create([
             'name' => 'Admin',
             'email' => 'admin@kayibal.com',
         ]);
+        User::factory(5)->create();
 
         // Crear los tags adicionales
         DB::table('tags')->insert([
@@ -31,5 +31,8 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Decoración'],
             ['name' => 'Otros'],
         ]);
+
+         // Crear publicaciones
+         Publication::factory(50)->create();
     }
 }
