@@ -5,7 +5,6 @@ import { Head } from "@inertiajs/react";
 
 export default function Index({ publications, searchTerm}) {
     // const { auth } = usePage().props;
-    console.log(searchTerm);
     return (
         <NavBar searchTerm={searchTerm}>
             <Head title="Home" />

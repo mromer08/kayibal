@@ -35,7 +35,7 @@ class PublicationFactory extends Factory
             'type' => $this->faker->randomElement(['buscando', 'ofreciendo']),
             'price' => $this->faker->randomFloat(0, 25, 1000),
             'image' => $image,
-            'state' => $this->faker->randomElement(['en revision', 'activo', 'inactivo', 'bloqueado', 'eliminado']),
+            'state' => $this->faker->randomElement(['en revision', 'activo', 'bloqueado']),
             'stock' => $this->faker->numberBetween(1, 100),
             'user_id' => \App\Models\User::inRandomOrder()->first()->id,
             'tag_id' => \App\Models\Tag::inRandomOrder()->first()->id,

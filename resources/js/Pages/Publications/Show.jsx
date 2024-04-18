@@ -1,5 +1,7 @@
 import CocoaDarkIcon from "@/Components/CocoaDarkIcon";
+import ColorLabel from "@/Components/ColorLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
+import StateLabel from "@/Components/StateLabel";
 import NavBar from "@/Layouts/NavBarLayout";
 import {
     TrashIcon,
@@ -7,18 +9,16 @@ import {
     PencilSquareIcon,
     UserCircleIcon,
 } from "@heroicons/react/20/solid";
-//   import { formatterPrice } from "../../utils/priceFormatter";
-import { Link, Head } from '@inertiajs/react';
+import { Link, Head, usePage } from '@inertiajs/react';
 
 export default function Show({ publication = null }) {
-    // const { addToCart } = useCart();    
-    // const { auth } = useContext(AuthContext);
-    // const [product, setProduct] = useState(null);
-    console.log(publication);
+    const { auth } = usePage().props;
+    const isAuthor = auth?.user?.id === publication.user_id;
+    const isAdmin = auth?.user?.role === 0;
 
     return (
         <NavBar>
-            <Head title={publication.title.substring(0,10)} />
+            <Head title={publication.title.substring(0, 10)} />
             <div className="bg-brown-50">
                 <div className="pt-20">
                     {/* Product info */}
@@ -40,11 +40,17 @@ export default function Show({ publication = null }) {
                                     {publication.title}
                                 </h1>
                                 <div className="mt-6 space-x-2">
-                                    {/* <StatusProduct status={publication.status} /> */}
-                                    {publication.state}
-                                    <span className="bg-indigo-100 text-sm p-1 rounded-lg">
+                                    <StateLabel state={(isAuthor || isAdmin) ? publication.state : false} />
+                                    <ColorLabel color={publication.type === 'buscando' ? 'bg-pink-400' : 'bg-indigo-400'}>
+                                        {publication.type}
+                                    </ColorLabel>
+                                    <ColorLabel color={publication.category === 'servicio' ? 'bg-orange-400' : 'bg-violet-400'}>
                                         {publication.category}
-                                    </span>
+                                    </ColorLabel>
+
+                                    <ColorLabel color="bg-brown-100">
+                                        {publication.tag.name}
+                                    </ColorLabel>
                                 </div>
 
                                 {/* Description */}
@@ -84,10 +90,10 @@ export default function Show({ publication = null }) {
                                     className="mt-4 flex w-full items-center justify-center"
                                 // onClick={() => addToCart(product)}                    
                                 >
-                                                              <CocoaDarkIcon className="text-white h-11 w-11 mr-2" />
-                                        <span className="text-3xl">
+                                    <CocoaDarkIcon className="text-white h-11 w-11 mr-2" />
+                                    <span className="text-3xl">
                                         {Number(publication.price).toLocaleString('en-US')}
-                                        </span>
+                                    </span>
                                 </PrimaryButton>
                             </div>
                         </div>
