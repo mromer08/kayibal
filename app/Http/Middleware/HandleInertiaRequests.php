@@ -30,10 +30,18 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $user = $request->user();
+        $wallet = null;
+        
+        // Verificar si el usuario tiene una wallet asociada
+        if ($user) {
+            $wallet = $user->wallet;
+        }
         return [
             ...parent::share($request),
             'auth' => [
                 'user' => $request->user(),
+                'wallet' => $wallet, // Agregar información de la wallet
             ],
             'tags' => Tag::all(),
         ];

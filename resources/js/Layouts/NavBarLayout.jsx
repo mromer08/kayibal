@@ -17,6 +17,7 @@ export default function NavBar({ header, children, searchTerm = '' }) {
         search: searchTerm
     })
 
+
     const submit = (e) => {
         e.preventDefault();
         get(route('search'));
@@ -62,7 +63,7 @@ export default function NavBar({ header, children, searchTerm = '' }) {
                             name="search"
                             value={data.search}
                             placeholder="Buscar..."
-                            className="w-96 py-1 rounded-md text-gray-800 border border-gray-300 text-sm focus:outline-none focus:border-brown-500"
+                            className="w-96 py-1 rounded-md text-white border border-gray-300 text-sm focus:outline-none focus:border-brown-500"
                             onChange={(e) => setData('search', e.target.value)}
                             
                         />
@@ -136,10 +137,10 @@ export default function NavBar({ header, children, searchTerm = '' }) {
                     {/* Ícono de Grano y número de granos */}
                     <Link 
                     className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-transparent hover:bg-brown-700 focus:outline-none transition ease-in-out duration-150"
-
+                    href={route('packs')}
                     >
                         <CocoaLightIcon className="text-white h-6 w-6 mr-2" />
-                        <span className="ml-1 text-white">1,500</span>
+                        <span className="ml-1 text-white">{auth?.user ? (Number(auth.wallet.nonRetirableBalance) + Number(auth.wallet.retirableBalance)).toLocaleString('en-US') : 'Compra'}</span>
                     </Link>
                 </div>
             </nav>

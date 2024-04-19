@@ -17,7 +17,7 @@ class PublicationController extends Controller
      */
     public function index(): Response
     {
-        return Inertia::render('Publications/Show', [
+        return Inertia::render('Publications/Index', [
             //props
             
         ]);

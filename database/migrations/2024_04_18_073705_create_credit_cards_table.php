@@ -14,6 +14,12 @@ return new class extends Migration
         Schema::create('credit_cards', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('holderName');
+            $table->string('lastDigits');
+            $table->string('number');
+            $table->date('expirationDate');
+            $table->string('cvcCode');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Referencia a la tabla de usuarios
         });
     }
 

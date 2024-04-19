@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CreditCardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicationController;
 use App\Http\Controllers\TagController;
@@ -54,7 +55,9 @@ Route::get('/search', [PublicationController::class, 'search'])->name('search');
 
 Route::get('/packs', function () {
     return Inertia::render('Packs/Index');
-// })->middleware(['auth'])->name('packs');
-});
+})->middleware(['auth'])->name('packs');
+
+Route::resource('cards', CreditCardController::class)
+    ->middleware(['auth']);
 
 require __DIR__ . '/auth.php';

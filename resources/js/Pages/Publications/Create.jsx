@@ -20,7 +20,6 @@ function Create() {
 
     const submit = (e) => {
         e.preventDefault();
-        console.log(data);
         post(route('publications.store'));
     };
     return (
